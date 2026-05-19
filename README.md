@@ -7,5 +7,5 @@
 
   # Notes:
   - A delay has been added to prevent Serial Monitor from being overflowed with print() statements
-  - Used AI to generate ReadVcc() to get a more accurate reading for analog output of temperature sensor in Nano.
+  - Since ReadVcc() from previous version was to complex to track, a fixed voltage reference was used to compare and calculate voltage from temperature sensor.
 
