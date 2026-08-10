@@ -1,3 +1,6 @@
+/*
+* This code is specifically for a 30pin ESP32 Dev Board
+*/
 #include <WiFi.h>
 
 enum Phase {
@@ -19,20 +22,21 @@ FanState fan_state;
 const unsigned long int MAX_TIME_ON = 1000UL * 60UL * 1UL; //1 min
 const unsigned long int MAX_TIME_OFF = 1000UL * 60UL * 2UL; //2 min
 
-const float V_REF = 3.3; //Pi Pico 2W supply V
-const float ADC_RES = 4095.0;
 const float ON_TEMP = 30.0; //Celsius
 const float OFF_TEMP = 26.0; //Celsius 
 
-//PINS
-const int GREEN_LIGHT_PIN = 3;//GPIO 3
-const int RED_LIGHT_PIN = 2;//GPIO 2
-const int FAN_PIN = 9;//GPIO 9
-const int TEMP_PIN = 26;//GPIO 26 ADC
+//PINS for 30 pin ESP32
+const int GREEN_LIGHT_PIN = 18;
+const int RED_LIGHT_PIN = 19;
+const int FAN_PIN = 23;
+const int TEMP_PIN = 34;
+
 
 // WIFI Configuration
-const char* WIFI_SSID = "HomeName";
-const char* WIFI_PASSWORD = "HOME_PASSWORD";
+const char* AP_SSID = "";
+const char* AP_PASSWORD = "";
+const char* WIFI_SSID = "";
+const char* WIFI_PASSWORD = "";
 
 // AI GENERATED HTML CSS CODE
 //Webpage Configuration
@@ -119,7 +123,7 @@ String buildWebpage() {
     //Temperature
     page += "<div class=\"reading\">";
     page += "Temperature: ";
-    page += "<span id=\"temperature\" class=\"value\">Loading...</span> &deg;C";
+    page += "<span id=\"temperature\" class=\"value\">Loading...</span> &deg;F";
     page += "</div>";    
 
     //Buttons
@@ -201,6 +205,7 @@ String buildWebpage() {
 String buildStatusJson() {
     const bool fanIsOn = digitalRead(FAN_PIN) == HIGH;
     const float tempC = tempRead();
+    const float tempF = (tempC * 1.8) + 32;
 
     String json;
 
@@ -219,31 +224,36 @@ String buildStatusJson() {
     json += "\",";
 
     json += "\"temperature\":";
-    json += String(tempC, 3);
+    json += String(tempF, 3);
 
     json += "}";
 
     return json;
 }
 
+//Updated from Access Point to STA for having Access Point and connection to router
+void beginBoardConnect() {
+    Serial.println("Starting Router and AP connections...");
+    WiFi.mode(WIFI_AP_STA);
 
-
-void connectToWiFi() {
-    Serial.print("Connecting to ");
-    Serial.println(WIFI_SSID);
+    bool APstatus = WiFi.softAP(AP_SSID, AP_PASSWORD); //local backup network
+    if (!APstatus) {
+        Serial.println("Failed to start AP");
+        return;
+    }
+    Serial.println("Access point started");
+    Serial.print("AP IP address: ");
+    Serial.println(WiFi.softAPIP());
 
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.setAutoReconnect(true);
 
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
+    Serial.println("Attempting router connection...");
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("WiFi connected");
+        Serial.print("IP Adddress: ");
+        Serial.println(WiFi.localIP());
     }
-
-    Serial.println();
-    Serial.println("Connected to Wi-Fi");
-
-    Serial.print("Open http://");
-    Serial.println(WiFi.localIP());
 }
 
 void sendResponse(WiFiClient& client, const String& response, const String& contentType) {
@@ -324,9 +334,8 @@ void handleWebClient() {
 
 float tempRead() {
     //Reads temperature sensor and converts raw mV to degree Celsius (10mV/C)
-    int rawReading = analogRead(TEMP_PIN);
-    float voltage = rawReading * V_REF / ADC_RES;  //4095 for ADC resolution (12 bit)
-    float tempC = voltage * 100.0;
+    int rawMilliVolts = analogReadMilliVolts(TEMP_PIN);
+    float tempC = rawMilliVolts / 10.0;
     return tempC;
 }
 
@@ -397,7 +406,7 @@ void setup() {
     phase_start = millis(); //gets current time directly instead of a variable
     current_phase = PHASE_ON;
     fan_state = FAN_OFF; //Started off as a safety feature
-    analogReadResolution(12); //Pi Pico 2W ADC resoulution
+    analogReadResolution(12); //ESP32 30 pin ADC resoulution
 
     pinMode(GREEN_LIGHT_PIN, OUTPUT);
     pinMode(RED_LIGHT_PIN, OUTPUT);
@@ -408,7 +417,7 @@ void setup() {
     digitalWrite(GREEN_LIGHT_PIN, LOW);
     digitalWrite(RED_LIGHT_PIN, HIGH);
 
-    connectToWiFi();
+    beginBoardConnect();
     server.begin();
     Serial.println("Web server started");
 }
