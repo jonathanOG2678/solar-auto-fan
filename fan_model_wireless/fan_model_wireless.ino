@@ -31,8 +31,12 @@ const int FAN_PIN = 9;//GPIO 9
 const int TEMP_PIN = 26;//GPIO 26 ADC
 
 // WIFI Configuration
-const char* WIFI_SSID = "HomeName";
-const char* WIFI_PASSWORD = "HOME_PASSWORD";
+const char* AP_SSID = "";
+const char* AP_PASSWORD = "";
+// const char* AP_SSID = "";
+// const char* AP_PASSWORD = "";
+const char* WIFI_SSID = "";
+const char* WIFI_PASSWORD = "";
 
 // AI GENERATED HTML CSS CODE
 //Webpage Configuration
@@ -226,24 +230,27 @@ String buildStatusJson() {
     return json;
 }
 
+//Updated from Access Point to STA for having Access Point and connection to router
+void beginBoardConnect() {
+    Serial.println("Starting Router and AP connections...");
+    WiFi.mode(WIFI_AP_STA);
 
-
-void connectToWiFi() {
-    Serial.print("Connecting to ");
-    Serial.println(WIFI_SSID);
+    bool APstatus = WiFi.softAP(AP_SSID, AP_PASSWORD); //local backup network
+    if (!APstatus) {
+        Serial.println("Failed to start AP");
+        return;
+    }
+    Serial.println("Access point started");
+    Serial.print("AP IP address: ");
+    Serial.println(WiFi.softAPIP());
 
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
+    Serial.println("Attempting router connection...");
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("WiFi connected");
+        Serial.print("IP Adddress: ");
+        Serial.println(WiFi.localIP());
     }
-
-    Serial.println();
-    Serial.println("Connected to Wi-Fi");
-
-    Serial.print("Open http://");
-    Serial.println(WiFi.localIP());
 }
 
 void sendResponse(WiFiClient& client, const String& response, const String& contentType) {
@@ -408,7 +415,7 @@ void setup() {
     digitalWrite(GREEN_LIGHT_PIN, LOW);
     digitalWrite(RED_LIGHT_PIN, HIGH);
 
-    connectToWiFi();
+    beginBoardConnect();
     server.begin();
     Serial.println("Web server started");
 }
