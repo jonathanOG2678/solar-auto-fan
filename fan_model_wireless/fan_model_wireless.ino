@@ -10,6 +10,7 @@ enum FanState{
   FAN_ON = 1
 };
 
+const float V_REF = 3.3; //Raspberry Pi Pico 2W Board voltage
 bool automaticMode = true;
 bool manualFanState = false;
 unsigned long int phase_start;
@@ -19,24 +20,19 @@ FanState fan_state;
 const unsigned long int MAX_TIME_ON = 1000UL * 60UL * 1UL; //1 min
 const unsigned long int MAX_TIME_OFF = 1000UL * 60UL * 2UL; //2 min
 
-const float V_REF = 3.3; //Pi Pico 2W supply V
-const float ADC_RES = 4095.0;
 const float ON_TEMP = 30.0; //Celsius
 const float OFF_TEMP = 26.0; //Celsius 
 
-//PINS
-const int GREEN_LIGHT_PIN = 3;//GPIO 3
-const int RED_LIGHT_PIN = 2;//GPIO 2
-const int FAN_PIN = 9;//GPIO 9
-const int TEMP_PIN = 26;//GPIO 26 ADC
+//GPIO Number for Raspberry Pi Pico 2W
+const int GREEN_LIGHT_PIN = 21;
+const int RED_LIGHT_PIN = 20;
+const int FAN_PIN = 22;
+const int TEMP_PIN = 26;
+
 
 // WIFI Configuration
 const char* AP_SSID = "";
 const char* AP_PASSWORD = "";
-// const char* AP_SSID = "";
-// const char* AP_PASSWORD = "";
-const char* WIFI_SSID = "";
-const char* WIFI_PASSWORD = "";
 
 // AI GENERATED HTML CSS CODE
 //Webpage Configuration
@@ -123,7 +119,7 @@ String buildWebpage() {
     //Temperature
     page += "<div class=\"reading\">";
     page += "Temperature: ";
-    page += "<span id=\"temperature\" class=\"value\">Loading...</span> &deg;C";
+    page += "<span id=\"temperature\" class=\"value\">Loading...</span> &deg;F";
     page += "</div>";    
 
     //Buttons
@@ -205,6 +201,7 @@ String buildWebpage() {
 String buildStatusJson() {
     const bool fanIsOn = digitalRead(FAN_PIN) == HIGH;
     const float tempC = tempRead();
+    const float tempF = (tempC * 1.8) + 32;
 
     String json;
 
@@ -223,19 +220,18 @@ String buildStatusJson() {
     json += "\",";
 
     json += "\"temperature\":";
-    json += String(tempC, 3);
+    json += String(tempF, 3);
 
     json += "}";
 
     return json;
 }
 
-//Updated from Access Point to STA for having Access Point and connection to router
 void beginBoardConnect() {
-    Serial.println("Starting Router and AP connections...");
-    WiFi.mode(WIFI_AP_STA);
+    Serial.println("Starting AP connection...");
+    WiFi.mode(WIFI_AP);
 
-    bool APstatus = WiFi.softAP(AP_SSID, AP_PASSWORD); //local backup network
+    bool APstatus = WiFi.softAP(AP_SSID, AP_PASSWORD); //local network
     if (!APstatus) {
         Serial.println("Failed to start AP");
         return;
@@ -243,14 +239,6 @@ void beginBoardConnect() {
     Serial.println("Access point started");
     Serial.print("AP IP address: ");
     Serial.println(WiFi.softAPIP());
-
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    Serial.println("Attempting router connection...");
-    if (WiFi.status() == WL_CONNECTED) {
-        Serial.println("WiFi connected");
-        Serial.print("IP Adddress: ");
-        Serial.println(WiFi.localIP());
-    }
 }
 
 void sendResponse(WiFiClient& client, const String& response, const String& contentType) {
@@ -266,15 +254,17 @@ void sendResponse(WiFiClient& client, const String& response, const String& cont
 }
 
 void handleWebClient() {
-    WiFiClient client = server.accept();
-
+    WiFiClient client = server.accept(); // accepts a client to communicate with web server
+    client.setTimeout(100); //ms timeout to prevent long hangs
+    
     if (!client) {
         return;
     }
 
     String requestLine;
     unsigned long webStartTime = millis();
-
+    bool requestComplete = false; // to prevent accidental control to incomplete requests
+    //Below while loop needs to be updated to be asynchronus
     while (client.connected() && millis() - webStartTime < 2000) {
         if (!client.available()) {
             continue;
@@ -286,9 +276,15 @@ void handleWebClient() {
             requestLine = line;
         }
 
-        if (line == "\r") {
+        if (line == "\r" || line.length() == 0) {
+            requestComplete = true;
             break;
         }
+    }
+    if (!requestComplete) {
+        Serial.println("HTTP Request incomplete/timed out");
+        client.stop();
+        return;
     }
 
     Serial.println(requestLine);
@@ -297,6 +293,8 @@ void handleWebClient() {
     if (requestLine.indexOf("GET /auto ") >= 0) {
         automaticMode = true;
         phase_start = millis();
+        current_phase = PHASE_ON;
+        fan_state = FAN_OFF;
         sendResponse(client, "{\"success\":true,\"mode\":\"AUTO\"}", "application/json");
     }
     // Returns with manual on
@@ -330,10 +328,11 @@ void handleWebClient() {
 }
 
 float tempRead() {
-    //Reads temperature sensor and converts raw mV to degree Celsius (10mV/C)
+    //Reads temperature sensor and converts raw voltage to degree Celsius (10mV/C)
     int rawReading = analogRead(TEMP_PIN);
-    float voltage = rawReading * V_REF / ADC_RES;  //4095 for ADC resolution (12 bit)
+    float voltage = (rawReading * V_REF) / 4095.0; //[0-4096) from 12 bit resolution
     float tempC = voltage * 100.0;
+
     return tempC;
 }
 
@@ -404,7 +403,7 @@ void setup() {
     phase_start = millis(); //gets current time directly instead of a variable
     current_phase = PHASE_ON;
     fan_state = FAN_OFF; //Started off as a safety feature
-    analogReadResolution(12); //Pi Pico 2W ADC resoulution
+    analogReadResolution(12); //Raspberry Pi Pico2W ADC resoulution
 
     pinMode(GREEN_LIGHT_PIN, OUTPUT);
     pinMode(RED_LIGHT_PIN, OUTPUT);
@@ -421,6 +420,6 @@ void setup() {
 }
 
 void loop() {
-    handleWebClient();
     fanControlLogic();
+    handleWebClient();
 }
