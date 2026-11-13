@@ -1,0 +1,26 @@
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+*.swp
+
+# Logs / temporary files
+*.log
+*.tmp
+*.bak
+*.backup
+
+# Local secrets / credentials
+.env
+.env.*
+!.env.example
+secrets.h
+credentials.h
+
+# Arduino build output / generated folders
+build/
+*.elf
+*.hex
+
+# IDE metadata
+.vscode/
+.idea/
