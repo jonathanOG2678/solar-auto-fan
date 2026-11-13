@@ -14,7 +14,7 @@ FanState fan_state;
 bool debug = false;
 
 const unsigned long int MAX_TIME_ON = 1000UL * 60UL * 30UL; //30 min
-const unsigned long int MAX_TIME_OFF = 1000UL * 60UL * 60UL; //60 min
+const unsigned long int MAX_TIME_OFF = 1000UL * 60UL * 20UL; //60 min
 
 const float V_REF = 5.19; //Nano supply V
 const float ON_TEMP = 30.0; //Celsius, 86.0F
@@ -94,8 +94,4 @@ void loop() {
   else {
     digitalWrite(FAN_PIN, LOW);
   }
-  //Serial.print("Current Phase: ");
-  //Serial.print(current_phase);
-  //Serial.print(" | Elapsed Time: ");
-  //Serial.println(current_time - phase_start);
 }
