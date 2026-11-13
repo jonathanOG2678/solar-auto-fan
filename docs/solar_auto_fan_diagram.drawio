@@ -1,0 +1,157 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="Gy6tPgF6klchPX4wrZHe">
+    <mxGraphModel dx="751" dy="778" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;" value="12V Battery" vertex="1">
+          <mxGeometry height="80" width="120" x="360" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-3" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" target="w4wsBVXDeendeVdO2Z_B-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="300.52" y="480" />
+              <mxPoint x="300.52" y="520" />
+            </Array>
+            <mxPoint x="300" y="400" as="sourcePoint" />
+            <mxPoint x="240" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;" value="Solar Charge Controller" vertex="1">
+          <mxGeometry height="80" width="120" x="240" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-5" edge="1" parent="1" source="w4wsBVXDeendeVdO2Z_B-4" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="300" y="310" as="sourcePoint" />
+            <mxPoint x="300" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;" value="100W Solar Panel" vertex="1">
+          <mxGeometry height="80" width="120" x="240" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-10" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="480" y="520" as="sourcePoint" />
+            <mxPoint x="560" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;" value="12V Fan" vertex="1">
+          <mxGeometry height="80" width="120" x="560" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-12" edge="1" parent="1" source="w4wsBVXDeendeVdO2Z_B-13" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="420" y="720" as="sourcePoint" />
+            <mxPoint x="420" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;" value="Buck Converter&lt;div&gt;12VDC to 5VDC&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="360" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-14" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="420" y="800" as="sourcePoint" />
+            <mxPoint x="420" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Arduino Nano" vertex="1">
+          <mxGeometry height="80" width="120" x="360" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-16" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="280" y="840" as="sourcePoint" />
+            <mxPoint x="360" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="LM35dt&lt;div&gt;Temperature Sensor&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="200" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-18" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;endFill=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="480" y="820" as="sourcePoint" />
+            <mxPoint x="560" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="IRLZ44N&lt;div&gt;N-Channel&lt;br&gt;&lt;div&gt;MOSFET&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="520" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="LED" vertex="1">
+          <mxGeometry height="80" width="80" x="480" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="LED" vertex="1">
+          <mxGeometry height="80" width="80" x="600" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-22" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="w4wsBVXDeendeVdO2Z_B-21" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="850" />
+            </Array>
+            <mxPoint x="480" y="850" as="sourcePoint" />
+            <mxPoint x="640" y="850" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-23" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="w4wsBVXDeendeVdO2Z_B-20" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="520.05" y="870.05" />
+            </Array>
+            <mxPoint x="479.98" y="870" as="sourcePoint" />
+            <mxPoint x="520.05" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-26" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;entryX=0.67;entryY=0.98;entryDx=0;entryDy=0;entryPerimeter=0;endFill=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="680" />
+              <mxPoint x="640.38" y="680" />
+            </Array>
+            <mxPoint x="600" y="681.6" as="sourcePoint" />
+            <mxPoint x="640.4000000000001" y="559.9999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="w4wsBVXDeendeVdO2Z_B-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Switched Ground&lt;div&gt;Return&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="650" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="PV Input" vertex="1">
+          <mxGeometry height="30" width="60" x="300" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Battery Charge Connection" vertex="1">
+          <mxGeometry height="30" width="60" x="310" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="12V Input" vertex="1">
+          <mxGeometry height="30" width="60" x="360" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="5V Output" vertex="1">
+          <mxGeometry height="30" width="60" x="360" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Temperature Signal" vertex="1">
+          <mxGeometry height="30" width="60" x="290" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Charging Phase Status" vertex="1">
+          <mxGeometry height="30" width="60" x="520" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Standby Phase Status" vertex="1">
+          <mxGeometry height="30" width="60" x="640" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Fan Control Signal" vertex="1">
+          <mxGeometry height="30" width="60" x="560" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-10" edge="1" parent="1" source="w4wsBVXDeendeVdO2Z_B-1" style="endArrow=none;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;exitX=1.002;exitY=0.88;exitDx=0;exitDy=0;exitPerimeter=0;" target="w4wsBVXDeendeVdO2Z_B-19" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="480.2" y="540" />
+              <mxPoint x="540" y="540" />
+            </Array>
+            <mxPoint x="468.24" y="590" as="sourcePoint" />
+            <mxPoint x="530" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Common Ground" vertex="1">
+          <mxGeometry height="30" width="60" x="540" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="9NAtJ5xMOz8OBuOXiWza-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="+12V Supply" vertex="1">
+          <mxGeometry height="30" width="60" x="490" y="490" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
